@@ -43,16 +43,15 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDtoResponse register(UserDtoRequest request, String frontURL) {
 
-        if (userRepository.existsByEmail(request.getEmail())) {
+        String normalizedEmail = request.getEmail().toLowerCase();
+
+        if (userRepository.existsByEmail(normalizedEmail)) {
             throw new ExceptionBadRequest("Email already registered : " + request.getEmail());
-        }
-        if (request.getPassword().isBlank() || request.getPassword().length() < 8) {
-            throw new ExceptionBadRequest("Password must be at least 8 characters long");
         }
 
         User user = new User();
         user.setName(request.getName());
-        user.setEmail(request.getEmail());
+        user.setEmail(normalizedEmail);
         user.setPassword(passwordEncoder.encode(request.getPassword()));
         user.setVerificationCode(RandomString.make(64));
         user.setVerified(false);
@@ -73,22 +72,22 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean verify(String verificationCode) {
+        if (verificationCode == null || verificationCode.isBlank()) {
+            return false;
+        }
 
         User user = userRepository.findByVerificationCode(verificationCode);
 
         if (user == null || user.isVerified()) {
-
             return false;
-
-        } else {
-
-            user.setVerificationCode(null);
-            user.setVerified(true);
-
-            userRepository.save(user);
-
-            return true;
         }
+
+        user.setVerified(true);
+        user.setVerificationCode(null);
+
+        userRepository.save(user);
+
+        return true;
     }
 
     // Get User By ID (centralized method)
@@ -107,11 +106,14 @@ public class UserServiceImpl implements UserService {
         if (request.getName() != null && !request.getName().isBlank()) {
             user.setName(request.getName());
         }
-        if (request.getEmail() != null && !request.getName().isBlank() && !user.getEmail().equals(request.getEmail())) {
-            if (userRepository.existsByEmail(request.getEmail())) {
+        if (request.getEmail() != null && !request.getEmail().isBlank() && !user.getEmail().equals(request.getEmail())) {
+            
+            String normalizedEmail = request.getEmail().toLowerCase();
+            
+            if (userRepository.existsByEmail(normalizedEmail)) {
                 throw new ExceptionBadRequest("Email already been used");
             }
-            user.setEmail(request.getEmail());
+            user.setEmail(normalizedEmail);
         }
         if (request.getPassword() != null && !request.getPassword().isBlank()) {
             user.setPassword(passwordEncoder.encode(request.getPassword()));

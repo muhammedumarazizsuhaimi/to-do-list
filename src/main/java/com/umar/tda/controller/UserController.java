@@ -37,8 +37,8 @@ public class UserController {
     }
 
     // register user
-    @PostMapping("/signup")
-    public ResponseEntity<UserDtoResponse> signup(@Valid@RequestBody UserDtoRequest registerdtorequest, String frontURL) {
+    @PostMapping("/register")
+    public ResponseEntity<UserDtoResponse> signup(@Valid @RequestBody UserDtoRequest registerdtorequest, String frontURL) {
 
         UserDtoResponse response = userService.register(registerdtorequest, frontURL);
 
@@ -57,7 +57,7 @@ public class UserController {
     }
 
     // login user
-    @PostMapping("/signin")
+    @PostMapping("/login")
     public ResponseEntity<String> signin() {
 
         return ResponseEntity.ok("Login successful");
