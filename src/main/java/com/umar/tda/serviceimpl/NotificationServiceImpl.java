@@ -6,28 +6,33 @@ package com.umar.tda.serviceimpl;
 
 import com.umar.tda.entity.User;
 import com.umar.tda.exception.ExceptionEmailFailToSend;
+import com.umar.tda.service.NotificationService;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import java.io.UnsupportedEncodingException;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
+import org.springframework.web.util.UriComponentsBuilder;
 
 /**
  *
  * @author UMAR
  */
 @Service
-public class NotificationServiceImpl {
+public class NotificationServiceImpl implements NotificationService {
 
-    private JavaMailSender mailSender;
+    private final JavaMailSender mailSender;
 
     public NotificationServiceImpl(JavaMailSender mailSender) {
         this.mailSender = mailSender;
     }
 
     
-    public void VerificationNotification(User user, String frontURL) {
+    @Override
+    @Async
+    public void sendVerificationEmail(User user, String frontURL) {
 
         try {
             
@@ -38,7 +43,7 @@ public class NotificationServiceImpl {
             String content = "Dear [[name]],<br>" + "Please click the link below to verify your registration:<br>" + "<h3><a href=\"[[URL]]\" target=\"_self\">VERIFY</a></h3>" + "Thank you,<br>" + "ibnusuhaimientertainment.";
 
             MimeMessage message = mailSender.createMimeMessage();
-            MimeMessageHelper helper = new MimeMessageHelper(message);
+            MimeMessageHelper helper = new MimeMessageHelper(message, true);
 
             helper.setFrom(fromAddress, senderName);
             helper.setTo(toAddress);
@@ -46,7 +51,11 @@ public class NotificationServiceImpl {
 
             content = content.replace("[[name]]", user.getName());
 
-            String verifyURL = frontURL + "/verify?code=" + user.getVerificationCode();
+            String verifyURL = UriComponentsBuilder
+                    .fromHttpUrl(frontURL)
+                    .path("/auth/verify")
+                    .queryParam("code", user.getVerificationCode())
+                    .toUriString();
 
             content = content.replace("[[URL]]", verifyURL);
 

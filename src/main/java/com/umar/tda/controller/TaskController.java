@@ -46,7 +46,7 @@ public class TaskController {
     // get list of task
     @GetMapping
     public ResponseEntity<List<TaskDtoResponse>> listTasks() {
-        return ResponseEntity.ok(taskService.listTasks());
+        return ResponseEntity.ok(taskService.listAllTask());
     }
     
     @GetMapping("/priority")

@@ -11,39 +11,49 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import lombok.*;
 
 /**
  *
  * @author UMAR
  */
-@NoArgsConstructor // required by JPA
-@AllArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED) // required by JPA only
 @Getter
 @Setter
 @Entity
-@Builder
 @Table(name = "user")
-
 public class User implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name="user_id")
     private Long userid;
 
-    @Column(name = "name", nullable = false)
+    @Column(nullable = false)
     private String name;
 
-    @Column(name = "email", unique = true, nullable = false)
+    @Column(unique = true, nullable = false)
     private String email;
 
-    @Column(name = "password", nullable = false)
-    private String password;
-    
-    @Column(name = "verification_code", length = 64)
+    @Column(length = 64)
     private String verificationCode;
-     
+
+    @Column(nullable = false)
     private boolean verified;
+
+    private LocalDateTime verificationExpiry;
+
+    @Column(nullable = false)
+    private boolean enabled;
+
+    @Builder
+    public User(String name, String email, String verificationCode, boolean verified, LocalDateTime verificationExpiry, boolean enabled) {
+        this.name = name;
+        this.email = email;
+        this.verificationCode = verificationCode;
+        this.verified = verified;
+        this.verificationExpiry = verificationExpiry;
+        this.enabled = enabled;
+    }
 
 }

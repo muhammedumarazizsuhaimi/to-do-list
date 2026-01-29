@@ -21,7 +21,7 @@ public interface TaskService {
     
     TaskDtoResponse createTask(TaskDtoRequest dto);
     
-    List<TaskDtoResponse> listTasks();
+    List<TaskDtoResponse> listAllTask();
     
     List<TaskDtoResponse> listTasksByPriority(TaskPriority priority);
     

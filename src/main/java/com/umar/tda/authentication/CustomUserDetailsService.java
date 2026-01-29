@@ -6,12 +6,8 @@ package com.umar.tda.authentication;
 
 import com.umar.tda.entity.User;
 import com.umar.tda.repository.UserRepo;
-import java.util.Arrays;
-import java.util.Collection;
-import org.springframework.security.core.GrantedAuthority;
+import java.util.List;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
@@ -20,7 +16,7 @@ import org.springframework.stereotype.Service;
  * @author UMAR
  */
 @Service
-public class CustomUserDetailsService implements UserDetailsService {
+public class CustomUserDetailsService {
 
     private final UserRepo userRepo;
 
@@ -28,16 +24,14 @@ public class CustomUserDetailsService implements UserDetailsService {
         this.userRepo = userRepo;
     }
 
-    @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    public CustomUserDetails loadByEmail(String email) throws UsernameNotFoundException {
 
-        User user = userRepo.findByEmail(username)
-                .orElseThrow(() -> new UsernameNotFoundException("User not found with email : " + username));
-        return new CustomUserDetails(user , authorities());
-    }
-    
-    public Collection<? extends GrantedAuthority> authorities(){
-        return Arrays.asList(new SimpleGrantedAuthority("USER"));
+        User user = userRepo.findByEmail(email)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found with email : " + email));
+        return new CustomUserDetails(
+                user,
+                List.of(new SimpleGrantedAuthority("ROLE_USER"))
+        );
     }
 
 }
