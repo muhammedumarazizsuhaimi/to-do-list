@@ -14,6 +14,12 @@ import org.springframework.stereotype.Service;
 @Service
 public interface NotificationService {
     
-    void VerificationNotification(User user, String frontURL);
+    /**
+     * Send verification email to a newly registered user.
+     *
+     * @param user     The user to send email to
+     * @param frontURL Base URL for constructing verification link
+     */
+    void sendVerificationEmail(User user, String frontURL);
     
 }

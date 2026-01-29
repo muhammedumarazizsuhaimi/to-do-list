@@ -7,10 +7,8 @@ package com.umar.tda.controller;
 import com.umar.tda.requestdto.UserDtoRequest;
 import com.umar.tda.responsedto.UserDtoResponse;
 import com.umar.tda.service.UserService;
-import jakarta.validation.Valid;
-import java.nio.file.attribute.UserPrincipal;
 
-import org.springframework.http.HttpStatus;
+import java.nio.file.attribute.UserPrincipal;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -19,7 +17,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -36,26 +33,7 @@ public class UserController {
         this.userService = userService;
     }
 
-    // register user
-    @PostMapping("/register")
-    public ResponseEntity<UserDtoResponse> signup(@Valid @RequestBody UserDtoRequest registerdtorequest, String frontURL) {
-
-        UserDtoResponse response = userService.register(registerdtorequest, frontURL);
-
-        return ResponseEntity.status(HttpStatus.CREATED).body(response);
-
-    }
-
-    // verify user
-    @GetMapping("/verify")
-    public ResponseEntity<?> verify(@RequestParam String code) {
-        if (userService.verify(code)) {
-            return ResponseEntity.ok("Account verified successfully");
-        } else {
-            return ResponseEntity.ok("Sorry Account not been varified");
-        }
-    }
-
+    
     // login user
     @PostMapping("/login")
     public ResponseEntity<String> signin() {

@@ -16,9 +16,7 @@ import org.springframework.stereotype.Service;
 @Service
 public interface UserService {
 
-    UserDtoResponse register(UserDtoRequest registerdtorequest, String frontURL);
-
-    boolean verify(String verificationCode);
+   
 
 //    UserDtoResponse GetMyProfile(Long id);
     User getUserById(Long id);
@@ -26,5 +24,7 @@ public interface UserService {
     UserDtoResponse UpdateProfile(Long id, UserDtoRequest userdtorequest);
 
     void deleteAccount(Long id);
+
+    
 
 }

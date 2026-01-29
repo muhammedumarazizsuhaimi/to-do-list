@@ -77,7 +77,7 @@ public class TaskServiceImpl implements TaskService {
 
     // 2️⃣ List Tasks
     @Override
-    public List<TaskDtoResponse> listTasks() {
+    public List<TaskDtoResponse> listAllTask() {
 
         return taskRepo
                 .findAll()
