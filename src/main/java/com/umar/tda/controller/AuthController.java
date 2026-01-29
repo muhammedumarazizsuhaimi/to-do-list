@@ -35,13 +35,13 @@ public class AuthController {
     public ResponseEntity<UserDtoResponse> register(@Valid @RequestBody UserDtoRequest request, @RequestHeader String frontURL) {
 
         UserDtoResponse response = authService.register(request, frontURL);
-        
+
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
     @GetMapping("/verify")
     public ResponseEntity<String> verify(@RequestParam String verificationCode) {
-        
+
         boolean success = authService.verifyUser(verificationCode);
 
         if (success) {
@@ -49,5 +49,12 @@ public class AuthController {
         } else {
             return ResponseEntity.badRequest().body("Invalid or expired verification code.");
         }
+    }
+
+    // login user
+    @PostMapping("/login")
+    public ResponseEntity<String> signin() {
+
+        return ResponseEntity.ok("Login successful");
     }
 }
