@@ -33,14 +33,6 @@ public class UserController {
         this.userService = userService;
     }
 
-    
-    // login user
-    @PostMapping("/login")
-    public ResponseEntity<String> signin() {
-
-        return ResponseEntity.ok("Login successful");
-    }
-
     @GetMapping("/profile")
     public ResponseEntity<UserDtoResponse> getProfile(@AuthenticationPrincipal UserPrincipal principal) {
         // principal contains userId from JWT/session
