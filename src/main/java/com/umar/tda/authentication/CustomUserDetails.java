@@ -4,7 +4,7 @@
  */
 package com.umar.tda.authentication;
 
-import com.umar.tda.entity.User;
+import com.umar.tda.usermanagement.User;
 import java.util.Collection;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

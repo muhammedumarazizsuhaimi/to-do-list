@@ -2,21 +2,13 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.umar.tda.serviceimpl;
+package com.umar.tda.usermanagement;
 
-import com.umar.tda.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import jakarta.transaction.Transactional;
-import net.bytebuddy.utility.RandomString;
 
 import com.umar.tda.exception.ExceptionUserNotFound;
-import com.umar.tda.entity.User;
 import com.umar.tda.exception.ExceptionBadRequest;
-import com.umar.tda.repository.UserRepo;
-import com.umar.tda.requestdto.UserDtoRequest;
-import com.umar.tda.responsedto.UserDtoResponse;
-import com.umar.tda.service.NotificationService;
 
 /**
  *

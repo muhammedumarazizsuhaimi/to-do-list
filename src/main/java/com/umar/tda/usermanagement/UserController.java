@@ -2,11 +2,8 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.umar.tda.controller;
+package com.umar.tda.usermanagement;
 
-import com.umar.tda.requestdto.UserDtoRequest;
-import com.umar.tda.responsedto.UserDtoResponse;
-import com.umar.tda.service.UserService;
 
 import java.nio.file.attribute.UserPrincipal;
 import org.springframework.http.ResponseEntity;

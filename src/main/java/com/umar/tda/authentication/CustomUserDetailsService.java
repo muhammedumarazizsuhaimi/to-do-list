@@ -4,8 +4,8 @@
  */
 package com.umar.tda.authentication;
 
-import com.umar.tda.entity.User;
-import com.umar.tda.repository.UserRepo;
+import com.umar.tda.usermanagement.User;
+import com.umar.tda.usermanagement.UserRepo;
 import java.util.List;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
